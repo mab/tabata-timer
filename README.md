@@ -2,6 +2,14 @@
 
 A phone-first interval timer built with TypeScript and Vite. It has no framework, account, or server-side runtime.
 
+## Live demo
+
+Try the deployed timer at [mab.github.io/tabata-timer](https://mab.github.io/tabata-timer/).
+
+| Phone | Tablet |
+| --- | --- |
+| <img src="docs/screenshot-phone.png" alt="Phone screenshot" height="400"> | <img src="docs/screenshot-tablet.png" alt="Tablet screenshot" height="400"> |
+
 ## Local development
 
 The project pins Node.js LTS with mise. Install mise, then run:
