@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f6f0" />
+    <meta
+      name="description"
+      content="A simple, configurable Tabata interval timer that runs in your browser."
+    />
+    <title>Tabata Timer</title>
+  </head>
+  <body>
+    <div class="app-shell" id="app" data-phase="ready">
+      <header class="topbar">
+        <a class="wordmark" href="./" aria-label="Tabata Timer home">
+          <span class="wordmark__stamp" aria-hidden="true">T</span>
+          <span>TABATA <span class="wordmark__light">TIMER</span></span>
+        </a>
+        <span class="topbar__tag">INTERVAL TRAINING / 01</span>
+      </header>
+
+      <main class="workout-layout">
+        <section class="workout" aria-labelledby="page-title">
+          <div class="workout__heading">
+            <div>
+              <p class="eyebrow">TRAINING SESSION</p>
+              <h1 id="page-title">Your workout</h1>
+            </div>
+            <span class="status-chip" id="timer-status">READY</span>
+          </div>
+
+          <div class="timer-stage">
+            <div class="timer-ring" id="timer-ring">
+              <div class="timer-ring__center">
+                <span class="phase-label" id="phase-label">READY</span>
+                <span class="time-display" id="time-remaining">00:05</span>
+                <span class="time-unit">MIN : SEC</span>
+              </div>
+            </div>
+            <p class="round-count" id="round-count">ROUND 01 <span>/</span> 08</p>
+            <p class="phase-caption" id="phase-caption">20 SEC WORK <span>·</span> 10 SEC REST</p>
+          </div>
+
+          <div class="workout-controls" aria-label="Workout controls">
+            <button class="button button--primary" id="primary-action" type="button">
+              Start workout
+            </button>
+            <button class="button button--quiet" id="reset-action" type="button" disabled>
+              Reset
+            </button>
+          </div>
+          <p class="sr-only" id="spoken-status" aria-live="polite" aria-atomic="true"></p>
+          <p class="app-notice" id="app-notice" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="settings" aria-labelledby="settings-title">
+          <div class="settings__heading">
+            <div>
+              <p class="eyebrow">BEFORE YOU BEGIN</p>
+              <h2 id="settings-title">Workout settings</h2>
+            </div>
+            <button class="text-button" id="classic-defaults" type="button">
+              Restore classic
+            </button>
+          </div>
+
+          <form id="settings-form" novalidate>
+            <fieldset class="settings-fieldset" id="settings-fieldset">
+              <legend class="sr-only">Workout timing and alerts</legend>
+              <div class="timing-grid">
+                <label class="number-field" for="workSeconds">
+                  <span class="number-field__name">Work</span>
+                  <span class="number-field__control">
+                    <input id="workSeconds" name="workSeconds" type="number" min="1" max="600" step="1" inputmode="numeric" />
+                    <span>sec</span>
+                  </span>
+                </label>
+                <label class="number-field" for="restSeconds">
+                  <span class="number-field__name">Rest</span>
+                  <span class="number-field__control">
+                    <input id="restSeconds" name="restSeconds" type="number" min="1" max="600" step="1" inputmode="numeric" />
+                    <span>sec</span>
+                  </span>
+                </label>
+                <label class="number-field" for="rounds">
+                  <span class="number-field__name">Rounds</span>
+                  <span class="number-field__control">
+                    <input id="rounds" name="rounds" type="number" min="1" max="99" step="1" inputmode="numeric" />
+                    <span>total</span>
+                  </span>
+                </label>
+                <label class="number-field" for="preparationSeconds">
+                  <span class="number-field__name">Prepare</span>
+                  <span class="number-field__control">
+                    <input id="preparationSeconds" name="preparationSeconds" type="number" min="0" max="60" step="1" inputmode="numeric" />
+                    <span>sec</span>
+                  </span>
+                </label>
+                <label class="number-field" for="cooldownSeconds">
+                  <span class="number-field__name">Cooldown</span>
+                  <span class="number-field__control">
+                    <input id="cooldownSeconds" name="cooldownSeconds" type="number" min="0" max="600" step="1" inputmode="numeric" />
+                    <span>sec</span>
+                  </span>
+                </label>
+              </div>
+
+              <div class="alert-settings">
+                <label class="switch-row" for="soundEnabled">
+                  <span class="switch-row__copy">
+                    <span class="switch-row__title">Phase sounds</span>
+                    <span class="switch-row__hint">A tone at each transition</span>
+                  </span>
+                  <input class="switch" id="soundEnabled" name="soundEnabled" type="checkbox" />
+                </label>
+                <label class="switch-row" for="vibrationEnabled">
+                  <span class="switch-row__copy">
+                    <span class="switch-row__title">Vibration</span>
+                    <span class="switch-row__hint" id="vibration-note">When supported by your browser</span>
+                  </span>
+                  <input class="switch" id="vibrationEnabled" name="vibrationEnabled" type="checkbox" />
+                </label>
+                <label class="switch-row" for="wakeLockEnabled">
+                  <span class="switch-row__copy">
+                    <span class="switch-row__title">Keep screen awake</span>
+                    <span class="switch-row__hint" id="wake-lock-note">While a workout is running</span>
+                  </span>
+                  <input class="switch" id="wakeLockEnabled" name="wakeLockEnabled" type="checkbox" />
+                </label>
+              </div>
+            </fieldset>
+          </form>
+
+          <details class="browser-note">
+            <summary>Browser behavior</summary>
+            <p>Sound begins after you press Start. Vibration and screen wake are browser-dependent; wake lock needs a secure connection and can be released by your device. If the page is suspended, the timer catches up when you return, but missed background cues cannot be guaranteed.</p>
+          </details>
+        </section>
+      </main>
+
+      <footer class="footer-line">
+        <span>NO ACCOUNT · SETTINGS STAY ON THIS DEVICE</span>
+        <span>WORK / REST / REPEAT</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
